@@ -100,6 +100,7 @@
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
+                <version>3.2.2</version>
                 <executions>
                     <execution>
                         <id>scala-compile-first</id>
@@ -114,6 +115,13 @@
                         <phase>process-test-resources</phase>
                         <goals>
                             <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>attach-docs-sources</id>
+                        <goals>
+                            <goal>add-source</goal>
+                            <goal>doc-jar</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -330,7 +338,11 @@
             <artifactId>commons-dbcp</artifactId>
             <version>1.4</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.rockymadden.stringmetric</groupId>
+            <artifactId>stringmetric-core_2.11</artifactId>
+            <version>0.27.4</version>
+        </dependency>
 
         <!-- spring -->
         <dependency>

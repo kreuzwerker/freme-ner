@@ -29,67 +29,67 @@ class FremeNer(override val getConfig: Config) extends DomainMap{
   implicit val timeout = Timeout(5 seconds)
   implicit val configImpl = getConfig
 
-  def spot(text: String, language: String, outputFormat: String, rdfPrefix: String): String = {
+  def spot(text: String, language: String, outputFormat: String, rdfPrefix: String, linkingMethod: String): String = {
     implicit val classifier = classifiers(language)
-    Await.result(entityLinker ? EntityLinker.SpotEntities(text, language, outputFormat, rdfPrefix, classify = false),
+    Await.result(entityLinker ? EntityLinker.SpotEntities(text, language, outputFormat, rdfPrefix, classify = false, linkingMethod),
       timeout.duration) match {
       case EnrichedOutput(output: String) => output
     }
   }
 
-  def spotClassify(text: String, language: String, outputFormat: String, rdfPrefix: String): String = {
+  def spotClassify(text: String, language: String, outputFormat: String, rdfPrefix: String, linkingMethod: String): String = {
     implicit val classifier = classifiers(language)
-    Await.result(entityLinker ? EntityLinker.SpotEntities(text, language, outputFormat, rdfPrefix, classify = true),
+    Await.result(entityLinker ? EntityLinker.SpotEntities(text, language, outputFormat, rdfPrefix, classify = true, linkingMethod),
       timeout.duration) match {
       case EnrichedOutput(output: String) => output
     }
   }
 
-  def spotLink(text: String, language: String, dataset: String, outputFormat: String, rdfPrefix: String, numLinks: Int): String = {
+  def spotLink(text: String, language: String, dataset: String, outputFormat: String, rdfPrefix: String, numLinks: Int, linkingMethod: String): String = {
     implicit val classifier = classifiers(language)
-    Await.result(entityLinker ? EntityLinker.SpotLinkEntities(text, language, outputFormat, dataset, rdfPrefix, numLinks, Set(), classify = false),
+    Await.result(entityLinker ? EntityLinker.SpotLinkEntities(text, language, outputFormat, dataset, rdfPrefix, numLinks, Set(), classify = false, linkingMethod),
       timeout.duration) match {
       case EnrichedOutput(output: String) => output
     }
   }
 
-  def spotLink(text: String, language: String, dataset: String, outputFormat: String, rdfPrefix: String, numLinks: Int, types: Set[String]): String = {
+  def spotLink(text: String, language: String, dataset: String, outputFormat: String, rdfPrefix: String, numLinks: Int, types: Set[String], linkingMethod: String): String = {
     implicit val classifier = classifiers(language)
-    Await.result(entityLinker ? EntityLinker.SpotLinkEntities(text, language, outputFormat, dataset, rdfPrefix, numLinks, types, classify = false),
+    Await.result(entityLinker ? EntityLinker.SpotLinkEntities(text, language, outputFormat, dataset, rdfPrefix, numLinks, types, classify = false, linkingMethod),
       timeout.duration) match {
       case EnrichedOutput(output: String) => output
     }
   }
 
-  def spotLink(text: String, language: String, dataset: String, outputFormat: String, rdfPrefix: String, numLinks: Int, domain: String): String = {
+  def spotLink(text: String, language: String, dataset: String, outputFormat: String, rdfPrefix: String, numLinks: Int, domain: String, linkingMethod: String): String = {
     implicit val classifier = classifiers(language)
     val types = domains(domain)
-    Await.result(entityLinker ? EntityLinker.SpotLinkEntities(text, language, outputFormat, dataset, rdfPrefix, numLinks, types, classify = false),
+    Await.result(entityLinker ? EntityLinker.SpotLinkEntities(text, language, outputFormat, dataset, rdfPrefix, numLinks, types, classify = false, linkingMethod),
       timeout.duration) match {
       case EnrichedOutput(output: String) => output
     }
   }
 
-  def spotLinkClassify(text: String, language: String, dataset: String, outputFormat: String, rdfPrefix: String, numLinks: Int): String = {
+  def spotLinkClassify(text: String, language: String, dataset: String, outputFormat: String, rdfPrefix: String, numLinks: Int, linkingMethod: String): String = {
     implicit val classifier = classifiers(language)
-    Await.result(entityLinker ? EntityLinker.SpotLinkEntities(text, language, outputFormat, dataset, rdfPrefix, numLinks, Set(), classify = true),
+    Await.result(entityLinker ? EntityLinker.SpotLinkEntities(text, language, outputFormat, dataset, rdfPrefix, numLinks, Set(), classify = true, linkingMethod),
       timeout.duration) match {
       case EnrichedOutput(output: String) => output
     }
   }
 
-  def spotLinkClassify(text: String, language: String, dataset: String, outputFormat: String, rdfPrefix: String, numLinks: Int, types: Set[String]): String = {
+  def spotLinkClassify(text: String, language: String, dataset: String, outputFormat: String, rdfPrefix: String, numLinks: Int, types: Set[String], linkingMethod: String): String = {
     implicit val classifier = classifiers(language)
-    Await.result(entityLinker ? EntityLinker.SpotLinkEntities(text, language, outputFormat, dataset, rdfPrefix, numLinks, types, classify = true),
+    Await.result(entityLinker ? EntityLinker.SpotLinkEntities(text, language, outputFormat, dataset, rdfPrefix, numLinks, types, classify = true, linkingMethod),
       timeout.duration) match {
       case EnrichedOutput(output: String) => output
     }
   }
 
-  def spotLinkClassify(text: String, language: String, dataset: String, outputFormat: String, rdfPrefix: String, numLinks: Int, domain: String): String = {
+  def spotLinkClassify(text: String, language: String, dataset: String, outputFormat: String, rdfPrefix: String, numLinks: Int, domain: String, linkingMethod: String): String = {
     implicit val classifier = classifiers(language)
     val types = domains(domain)
-    Await.result(entityLinker ? EntityLinker.SpotLinkEntities(text, language, outputFormat, dataset, rdfPrefix, numLinks, types, classify = true),
+    Await.result(entityLinker ? EntityLinker.SpotLinkEntities(text, language, outputFormat, dataset, rdfPrefix, numLinks, types, classify = true, linkingMethod),
       timeout.duration) match {
       case EnrichedOutput(output: String) => output
     }

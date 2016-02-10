@@ -57,8 +57,8 @@ trait EntityApiService extends HttpService with Actor with PerRequestCreator wit
 
   def entityRoute =
     (path("entities") & post) {
-          parameters("language", "dataset", "format" ? "TTL", "prefix" ? "http://www.freme-project.eu/data/", "numLinks" ? 1, "types" ? "", "domain" ? "", "mode".as(ModeUnmarshaller) ? SpotLinkClassify()) {
-            case (language: String, dataset: String, format: String, prefix: String, numLinks: Int, types: String, domain: String, mode: Mode) =>
+          parameters("language", "dataset", "format" ? "TTL", "prefix" ? "http://www.freme-project.eu/data/", "numLinks" ? 1, "types" ? "", "domain" ? "", "mode".as(ModeUnmarshaller) ? SpotLinkClassify(), "linkingMethod" ? "") {
+            case (language: String, dataset: String, format: String, prefix: String, numLinks: Int, types: String, domain: String, mode: Mode,  linkingMethod: String) =>
               entity(as[String]) {
                 text =>
                     respondWithMediaType(MediaType.custom(mediaTypes(format))) {
@@ -84,23 +84,23 @@ trait EntityApiService extends HttpService with Actor with PerRequestCreator wit
                             mode match {
                               case Spot() =>
                                 entityLinker {
-                                  EntityLinker.SpotEntities(text, language, format, prefix, classify = false)
+                                  EntityLinker.SpotEntities(text, language, format, prefix, classify = false, linkingMethod)
                                 }
                               case SpotClassify() =>
                                 entityLinker {
-                                  EntityLinker.SpotEntities(text, language, format, prefix, classify = true)
+                                  EntityLinker.SpotEntities(text, language, format, prefix, classify = true, linkingMethod)
                                 }
                               case Link() =>
                                 entityLinker {
-                                  EntityLinker.LinkEntities(text, language, format, dataset, prefix, numLinks, restrictToTypes)
+                                  EntityLinker.LinkEntities(text, language, format, dataset, prefix, numLinks, restrictToTypes, linkingMethod)
                                 }
                               case SpotLinkClassify() =>
                                 entityLinker {
-                                  EntityLinker.SpotLinkEntities(text, language, format, dataset, prefix, numLinks, restrictToTypes, classify = true)
+                                  EntityLinker.SpotLinkEntities(text, language, format, dataset, prefix, numLinks, restrictToTypes, classify = true, linkingMethod)
                                 }
                               case SpotLink() =>
                                 entityLinker {
-                                  EntityLinker.SpotLinkEntities(text, language, format, dataset, prefix, numLinks, restrictToTypes, classify = false)
+                                  EntityLinker.SpotLinkEntities(text, language, format, dataset, prefix, numLinks, restrictToTypes, classify = false, linkingMethod)
                                 }
                             }
                           case None =>

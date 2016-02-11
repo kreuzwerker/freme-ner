@@ -41,6 +41,7 @@ class SimilarityFilter(solr: HttpSolrClient) {
     * @return
     */
   private def computeSimilarity(surfaceFormA: String, surfaceFormB: String): Boolean = {
+    if (surfaceFormA.isEmpty || surfaceFormB.isEmpty) return false
     JaroWinklerMetric.compare(surfaceFormA, surfaceFormB).get > threshold
   }
 

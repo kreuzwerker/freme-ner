@@ -33,6 +33,9 @@
         <property name="domainsFile">
             <value>/opt/freme-ner/domains.csv</value>
         </property>
+        <property name="timeout">
+            <value>60</value>
+        </property>
     </bean>
 
     <!--<context:component-scan base-package="eu.freme.common.persistence" />-->

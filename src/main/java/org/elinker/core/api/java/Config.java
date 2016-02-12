@@ -18,6 +18,11 @@ public class Config {
     String languages = "";
     String modelsLocation = "";
     String domainsFile = "";
+    Integer timeout;
+
+    public void setTimeout(Integer timeout) {
+        this.timeout = timeout;
+    }
 
     public void setSparqlEndpoint(String sparqlEndpoint) { this.sparqlEndpoint = sparqlEndpoint; }
 
@@ -65,7 +70,8 @@ public class Config {
                 sparqlEndpoint,
                 solrURI,
                 domainsFile,
-                datasetDAO);
+                datasetDAO,
+                timeout);
     }
 
     public org.elinker.core.api.scala.Config getScalaConfig() {
@@ -81,6 +87,7 @@ public class Config {
                 sparqlEndpoint,
                 solrURI,
                 domainsFile,
-                datasetDAO);
+                datasetDAO,
+                timeout);
     }
 }
